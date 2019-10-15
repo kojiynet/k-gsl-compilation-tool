@@ -1,2 +1,2 @@
 # kgslc
-A tool to help compile GNU Scientific Library
+A tool to help build GNU Scientific Library
