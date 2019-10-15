@@ -2,7 +2,7 @@
 /*
 	kgslc.cpp
 	
-	k-gsl-compilation-tool
+	A tool to help build GNU Scientific Library
 	Ver.0.05 in Development
 	
 	Copyright (C) 2013-2019 Koji Yamamoto a.k.a. utilcraft
@@ -15,7 +15,11 @@
 	
 	ToDo:
 	
-	・GSL2.6のmovstatのMakefile.amに対応していない。空白文字を無視するべし。
+	・GSL2.6のmovstatのMakefile.amに対応していない。'\'での改行エスケープを許容すべし。
+	　→Done. Oct 15, 2019
+
+	・実際にライブラリを使えるか試す。
+	・config.hについて検討する。
 	
 	・オプション　-Pgsl.lib　とかで、生成されたすべてのライブラリをパックする、とか
 	・出力バッチファイル名も指定？ "-Ogslcomp1.bat"
@@ -94,10 +98,11 @@ class makefile {
 		
 		bool initialize( bool, const string &, const string &, 
 		                 const string & = "");
+		
+		void connectLines( vector <string> &) const;
 		void parseLines( const vector <string> &);
 		bool pickData( const vector <string> &, const string &, vector <string> &);
 		void getSubdirNames( vector <string> &) const;
-		
 		void getCommands( vector <string> &) const;
 		void getCommandsMsc( vector <string> &) const;
 		void getCommandsGcc( vector <string> &) const;
@@ -158,12 +163,12 @@ int main( int argc, char *argv[])
 		setAlertExceptOn();
 		
 		cout << endl <<
-			"*****************************" << endl <<
+			"*****************************************" << endl <<
 			"kgslc" << endl << 
-			"K\'s utility for compiling GSL" << endl <<
-			"Version 0.03" << endl << 
-			"Written by Koji Yamamoto" << endl <<
-			"*****************************" << endl << endl;
+			"A tool to help build GSL" << endl <<
+			"Version 0.05d" << endl << 
+			"Written by Koji Yamamoto a.k.a. utilcraft" << endl <<
+			"*****************************************" << endl << endl;
 		
 		args.initialize( argc, argv);
 		b = interpretArgs( args, wdir, sdir, ci);
@@ -212,14 +217,14 @@ int main( int argc, char *argv[])
 		
 	} catch ( exception &e){
 		
-		cout << "Error occurred:" << endl
+		cout << "An error occurred:" << endl
 		     << " " << e.what() << endl;
 		
 		return 1;
 		
 	} catch ( ...){
 		
-		cout << "Error occurred." << endl;
+		cout << "An error occurred." << endl;
 		
 		return 1;
 		
@@ -392,6 +397,9 @@ bool makefile :: initialize( bool t, const string &w, const string &s,
 	kif.readAllLines( sv);
 	kif.close();
 	
+	// Connect lines separated using '\' 
+	connectLines( sv);
+
 	parseLines( sv);
 	
 	// subdirがある場合、さらにオブジェクトを生成する
@@ -412,6 +420,40 @@ bool makefile :: initialize( bool t, const string &w, const string &s,
 	
 	return true;
 	
+}
+
+void makefile :: connectLines( vector <string> & arglines) const
+{
+
+	vector <string> newlines;
+	string buf;
+
+	buf = "";
+
+	for ( string s : arglines){
+
+		char ch;
+		
+		// get the end character in ch
+		if ( s.size() > 0){
+			ch = *( s.end() - 1);
+		}
+		
+		// hold string in buf if the end character is '\\'
+		if ( s.size() > 0 && ch == '\\'){
+			s.erase( s.end() - 1);
+			buf.append( s);
+			buf.append( " ");
+		} else {
+			buf.append( s);
+			newlines.push_back( buf);
+			buf = "";
+		}
+
+	}
+
+	arglines = newlines;
+
 }
 
 void makefile :: parseLines( const vector <string> &lines)
