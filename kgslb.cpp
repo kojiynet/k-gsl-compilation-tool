@@ -1,11 +1,13 @@
 
 /*
-	kgslc.cpp
+	kgslb.cpp
 	
 	A tool to help build GNU Scientific Library
 	Ver.0.05 in Development
 	
 	Copyright (C) 2013-2019 Koji Yamamoto a.k.a. utilcraft
+	
+	Formerly named as "kgslc"
 	
 	GSLのコンパイル用にMakefileから情報を抽出する。
 	いやいや、Unix/Linuxのスクリプトとか、autotoolsとか、GNU makeとか、
@@ -13,13 +15,20 @@
 	ビルドするのにバッチファイルでよくないでしょうか。。
 	っていうコンセプトです。
 	
+	
 	ToDo:
 	
-	・GSL2.6のmovstatのMakefile.amに対応していない。'\'での改行エスケープを許容すべし。
-	　→Done. Oct 15, 2019
-
-	・実際にライブラリを使えるか試す。
 	・config.hについて検討する。
+	　VCの場合：
+	　config.hとして、GSLの配布ソースのconfig.h.inと同じものでもビルド可能。
+　　　ただ、isnanとisfiniteに関する警告が多数発生した。
+　　　→これに対処することを考える。
+　　
+	・実際にライブラリを使えるか試す。
+	
+	・GCCでのビルド。config.hはどうなるか？
+	
+	
 	
 	・オプション　-Pgsl.lib　とかで、生成されたすべてのライブラリをパックする、とか
 	・出力バッチファイル名も指定？ "-Ogslcomp1.bat"
@@ -206,7 +215,7 @@ int main( int argc, char *argv[])
 		}
 		
 		bf.setDir( wdir, sdir);
-		bf.setFileName( "kgslc.bat");
+		bf.setFileName( "kgslb.bat");
 		bf.setTopMakefile( topmf);
 		
 		b = bf.createBatchFile();
@@ -871,7 +880,7 @@ bool batchfile :: createBatchFile( void)
 	/* ********** バッチファイル：最初のコメント ********** */
 	
 	lines.push_back( "rem **************************************************************************");
-	lines.push_back( "rem * This file was created by \"kgsl\" - K\'s Utility for Compiling GSL");
+	lines.push_back( "rem * This file was created by \"kgslb\" - A tool to help build GSL");
 	lines.push_back( "rem *");
 	lines.push_back( "rem * Before running this batch file, please make sure you copy \"config.h.in\"");
 	lines.push_back( "rem * file to the workspace directory, and, rename it \"config.h\", and, ");
