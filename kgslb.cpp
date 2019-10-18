@@ -12,6 +12,8 @@
 	GSLのコンパイル用にMakefileから情報を抽出する。
 	いやいや、Unix/Linuxのスクリプトとか、autotoolsとか、GNU makeとか、
 	ちょっとわからないんで。。。
+	※ネット上で得られる、GSL用のCMakeのMakeListを用いても、自分の環境では
+	　正常に利用できるライブラリができなかった。。
 	ビルドするのにバッチファイルでよくないでしょうか。。
 	っていうコンセプトです。
 	
@@ -20,14 +22,21 @@
 	
 	・config.hについて検討する。
 	　VCの場合：
-	　　config.hとして、GSLの配布ソースのconfig.h.inと同じものでもビルド可能。
-　　　　ただ、isnan isfinite isinfに関する警告が多数発生した。
-　　　　→これらのシンボルが存在することを、confi.h内でdefineで指定した。
-		実際にライブラリを使えた。
+	　config.hとして、GSLの配布ソースのconfig.h.inと同じものでもビルド可能。
+	　　ただ、isnan isfinite isinfに関する警告が多数発生した。
+	　　→これらのシンボルが存在することを、config.h内でdefineで指定した。
+	　　→実際にライブラリを使えた。
+	　GCCの場合：
+	　config.hとして、GSLの配布ソースのconfig.h.inを変更する。
+	　　isnan isfinite isinfが存在することを、config.h内でdefineで指定した。
+	　さらに、finiteも存在することをdefineした。（そうでないと警告が多発する）
+	　　→こちらも、実際にライブラリを使えた。
 	
-	・GCCでのビルド。config.hはどうなるか？
-	
-	
+	・GCCの場合の一時ファイルを、バッチファイルからつくれないか。
+	　リダイレクト：
+	　　　echo abc > out.txt
+	　　　echo edf >> out.txt
+	　　で、abc\ndef\nというファイルができる。
 	
 	・オプション　-Pgsl.lib　とかで、生成されたすべてのライブラリをパックする、とか
 	・出力バッチファイル名も指定？ "-Ogslcomp1.bat"
@@ -37,6 +46,7 @@
 	・リリース記録とか日付とか
 	・ディレクトリ名とか、ASCII英数字のみ、という仕様をReadmeに書く
 	・Readme以上の内容を、Materialにする。
+	・1つの.cファイル内で、ソースファイルを全部インクルードする、ようなものもつくる？
 	
 	・XMLで出せるオプション？
 	
