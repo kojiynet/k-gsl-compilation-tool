@@ -5,8 +5,8 @@ Copyright (C) 2013-2019 Koji Yamamoto a.k.a. utilcraft
 
 The explanations are still imcomplete and mostly in Japanese only.
 Sorry for inconvenience...
-
-
+  
+  
 # What is kgslb? （kgslbとは？）
 
 kgslbは、GNU Scientific Library（GSL）をビルドする際に、補助するツールです。
@@ -25,10 +25,11 @@ GSLをビルドするための、既存の方法として、以下のものが�
 kgslbはこれらとは異なるアプローチを提供しています。
 
 ※GSLの使用にあたっては、GSLのライセンスを遵守しなければなりません。
-
-
+  
+  
 # How to Use kgslb? （kgslbの使用方法）
-
+  
+  
 ## Preparation （準備）
 
 kgslbを実行する前に、以下の準備をします。
@@ -45,7 +46,8 @@ kgslbを実行する前に、以下の準備をします。
 コンパイルにVCかGCCを使用する場合、コンパイラに以下の関数またはマクロが付属しているので、これをconfig.hに反映させるとよいでしょう。  
 - isnan, isfinite, isinf
 - GCCの場合には、さらに、finite
-
+  
+  
 ## Running kgslb.exe （kgslb.exeの実行）
 
 kgslbを実行する際、コンソールでオプションを指定します。  
@@ -77,13 +79,24 @@ kgslbを実行する際、コンソールでオプションを指定します。
 デフォルトでは、VC（"-Cm"）が指定されます。  
 "-Cm"を指定すると、Microsoft Visual C++用のコマンドをバッチファイルに記述します。  
 "-Cg"を指定すると、GCC用のコマンドをバッチファイルに記述します。  
+  
+  
+## Running the batchfile "kgslb.bat" （バッチファイル"kgslb.bat"の実行）
 
+kgslb.exeを実行すると、バッチファイル"kgslb.bat"がそのディレクトリに出力されます。  
 
+このバッチファイルを実行すると、ビルドが始まります。この工程には通常かなりの時間がかかります。  
+
+ビルドが成功すると、ワークスペースにライブラリファイルが出力されます。デフォルトのMakefile.amを用いている場合、libgsl.laとlibgslcblas.laが生成されることになります。また、GSL用のインクルードファイルがコピーされたgslというディレクトリも作成されます。  
+
+ユーザがGSLを用いたプログラムを作成する場合、このgslにあるインクルードファイルをインクルードし、また、完成したライブラリファイルをリンクします。  
+  
+  
 # Enjoy!! 
 
 I hope you all enjoy hacking!
-
-
+  
+  
 # Acknowledgement （謝辞）
 
 I am grateful to the creators of GNU Scientific Library for the benefit we could obtain, in particular to the followings:
