@@ -20,18 +20,6 @@
 	
 	ToDo:
 	
-	・config.hについて検討する。
-	　VCの場合：
-	　config.hとして、GSLの配布ソースのconfig.h.inと同じものでもビルド可能。
-	　　ただ、isnan isfinite isinfに関する警告が多数発生した。
-	　　→これらのシンボルが存在することを、config.h内でdefineで指定した。
-	　　→実際にライブラリを使えた。
-	　GCCの場合：
-	　config.hとして、GSLの配布ソースのconfig.h.inを変更する。
-	　　isnan isfinite isinfが存在することを、config.h内でdefineで指定した。
-	　さらに、finiteも存在することをdefineした。（そうでないと警告が多発する）
-	　　→こちらも、実際にライブラリを使えた。
-	
 	・GCCの場合の一時ファイルを、バッチファイルからつくれないか。
 	　リダイレクト：
 	　　　echo abc > out.txt
@@ -63,7 +51,7 @@
 */
 
 
-/* ********** プリプロセッサ指令・名前空間指定 ********** */
+/* ********** Preprocessor Directives ********** */
 
 #include <iostream>
 #include <fstream>
@@ -72,22 +60,28 @@
 #include <k09/kinputfile00.cpp>
 #include <k09/koutputfile00.cpp>
 
+
+/* ********** Namespace Declarations/Directives ********** */
+
 using namespace std;
 
 
-/* ********** 型宣言・クラス宣言 ********** */
+/* ********** Class Declarations ********** */
 
 class makefile;
 class batchfile;
 
 
-/* ********** 関数宣言 ********** */
+/* ********** Enum Definitions ********** */
+
+
+/* ********** Function Declarations ********** */
 
 int main( int, char *[]);
 bool interpretArgs( const clArgs &, string &, string &, compilerId &);
 
 
-/* ********** 型定義・クラス定義 ********** */
+/* ********** Class Definitions ********** */
 
 class makefile {
 	
@@ -161,15 +155,16 @@ class batchfile {
 	
 };
 
-/* ********** グローバル変数 ********** */
+
+/* ********** Global Variables ********** */
 
 
-/* ********** 静的メンバ変数の定義 ********** */
+/* ********** Definitions of Static Member Variables ********** */
 
 compilerId makefile :: compiler = MSC;
 
 
-/* ********** 関数定義 ********** */
+/* ********** Function Definitions ********** */
 
 int main( int argc, char *argv[])
 {
@@ -330,9 +325,9 @@ bool interpretArgs( const clArgs &ca, string &w, string &s, compilerId &ci)
 }
 
 
-/* ********** クラスメンバ関数定義 ********** */
+/* ********** Definitions of Member Functions ********** */
 
-/* ********** makefileクラスのメンバ関数 ********** */
+/* ********** Class "makefile" ********** */
 
 makefile :: makefile( void)
  : ignore( false), top( true), submakefiles(), subdirnames(),
@@ -843,7 +838,7 @@ compilerId makefile :: getCompilerId( void)
 }
 
 
-/* ********** makefileクラスのメンバ関数 ********** */
+/* ********** Class "batchfile" ********** */
 
 batchfile :: batchfile( void) : wdir(), filename(), subdirnames(), topmf(){}
 
