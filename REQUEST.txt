@@ -1,0 +1,13 @@
+
+Request from Author
+About "kgslb"
+
+Koji Yamamoto a.k.a. utilcraft
+
+Over and above the legal restrictions imposed by the LICENSE, if you use this software for your interest including profitable activities and academic publications, then you are requested to provide proper attribution.
+
+Suggested Citation:
+Yamamoto, Koji. 2019. "kgslb." github.com/kojiynet/kgslb (Retrieved Oct 20, 2019).
+
+Suggested Acknowledgment:
+We used "kgslb" (github.com/kojiynet/klib, retrieved Oct 20, 2019), which has been developed by Koji Yamamoto.
