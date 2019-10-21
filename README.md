@@ -97,6 +97,13 @@ kgslb.exeを実行すると、バッチファイル"kgslb.bat"がそのディレ
 I hope you all enjoy hacking!
   
   
+# Misc
+Please comply with the terms appearing in LICENSE file. In addition, please read REQUEST file and understand the content.  
+  
+I read the following interesitng posts and grateful to the writers:  
+[code - Is there an open-source license that enforces citations? - Academia Stack Exchange](https://academia.stackexchange.com/questions/97480/is-there-an-open-source-license-that-enforces-citations)  
+  
+  
 # Acknowledgement （謝辞）
 
 I am grateful to the creators of GNU Scientific Library for the benefit we could obtain, in particular to the followings:
