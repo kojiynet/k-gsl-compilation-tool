@@ -175,7 +175,8 @@ COMING SOON!!
 
 ## Running the batchfile "kgslb.bat" 
 
-COMING SOON!!
+![COMING SOON!!](img/somingsoon.png)
+
 
 
 # Misc
