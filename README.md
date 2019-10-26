@@ -170,7 +170,7 @@ Specific recommendations follow:
 
 ## Running kgslb.exe 
 
-COMING SOON!!
+![COMING SOON!!](https://github.com/kojiynet/kgslb/blob/master/img/comingsoon.png?raw=true)
 
 
 ## Running the batchfile "kgslb.bat" 
