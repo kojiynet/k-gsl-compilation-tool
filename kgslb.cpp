@@ -9,45 +9,8 @@
 	
 	Formerly named as "kgslc"
 	
-	GSLのコンパイル用にMakefileから情報を抽出する。
-	いやいや、Unix/Linuxのスクリプトとか、autotoolsとか、GNU makeとか、
-	ちょっとわからないんで。。。
-	※ネット上で得られる、GSL用のCMakeのMakeListを用いても、自分の環境では
-	　正常に利用できるライブラリができなかった。。
-	ビルドするのにバッチファイルでよくないでしょうか。。
-	っていうコンセプトです。
+	In using this, please read the document which states terms of use.
 	
-	
-	ToDo:
-	
-	・GCCの場合の一時ファイルを、バッチファイルからつくれないか。
-	　リダイレクト：
-	　　　echo abc > out.txt
-	　　　echo edf >> out.txt
-	　　で、abc\ndef\nというファイルができる。
-	
-	・オプション　-Pgsl.lib　とかで、生成されたすべてのライブラリをパックする、とか
-	・出力バッチファイル名も指定？ "-Ogslcomp1.bat"
-	・コンパイラに渡すオプション "-AOx" Addtional Opition for Compilers
-	・自然言語風に出せるオプション？ "-N" （-Pとか-Cとかが無効に）
-	・全体的に改良、コメントの改善？
-	・リリース記録とか日付とか
-	・ディレクトリ名とか、ASCII英数字のみ、という仕様をReadmeに書く
-	・Readme以上の内容を、Materialにする。
-	・1つの.cファイル内で、ソースファイルを全部インクルードする、ようなものもつくる？
-	
-	・XMLで出せるオプション？
-	
-	・clArgsで、以下の表現すべてを同値にしたい。
-		-Wc:\ -W:c:\ -W"c:\" -W:"c:\"
-		-W c:\
-		-W "c:\"
-	
-	【注意】GCCの場合、ライブラリのライブラリをつくるのに、スクリプトが必要になるので、一時ファイルをつくる。
-　　　　　　「GCCのとき、batと一緒にできるtmpファイルを消さないでください」と言うべき。
-	　　　　GCCのとき、g++ -o test.exe test.cpp libgsl.la libgslcblas.la　とかで使える。
-	
-
 */
 
 
