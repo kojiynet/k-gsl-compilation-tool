@@ -1,3 +1,4 @@
+
 # kgslb
 A tool to help build GNU Scientific Library
 
@@ -5,9 +6,11 @@ Copyright (C) 2013-2019 Koji Yamamoto a.k.a. utilcraft
 
 The explanations are still imcomplete and mostly in Japanese only.
 Sorry for inconvenience...
-  
-  
-# What is kgslb? （kgslbとは？）
+
+The explanations in English follow the Japanese ones.
+
+
+# kgslbとは？
 
 kgslbは、GNU Scientific Library（GSL）をビルドする際に、補助するツールです。
 
@@ -24,15 +27,20 @@ GSLをビルドするための、既存の方法として、以下のものが�
 
 kgslbはこれらとは異なるアプローチを提供しています。
 
-※GSLの使用にあたっては、GSLのライセンスを遵守しなければなりません。
+※GSLの使用にあたっては、GSLのライセンスを遵守しなければなりません。  
+  
+    
+# kgslbの使用方法
   
   
-# How to Use kgslb? （kgslbの使用方法）
-  
-  
-## Preparation （準備）
+## "kgslb.exe"の作成
 
-kgslbを実行する前に、以下の準備をします。
+`include`ディレクトリ内のファイルをincludeできるようにしながら、`kgslb.cpp`をコンパイルし、exeファイルを作成します。この際、Boost.Filesystemが必要です。
+ 
+  
+## 準備
+
+kgslb.exeを実行する前に、以下の準備をします。
 
 (1) GSLをダウンロードして展開します。  
 展開後のGSLのトップディレクトリ内に、Makefile.amと、config.h.inが存在することを確認します。
@@ -48,7 +56,7 @@ kgslbを実行する前に、以下の準備をします。
 - GCCの場合には、さらに、finite
   
   
-## Running kgslb.exe （kgslb.exeの実行）
+## kgslb.exeの実行
 
 kgslbを実行する際、コンソールでオプションを指定します。  
 
@@ -72,7 +80,7 @@ kgslbを実行する際、コンソールでオプションを指定します。
 デフォルトでは、カレントディレクトリ（"."）が指定されます。  
 ワークスペースには、最終的なライブラリが出力されます。  
 また、ヘッダファイルのディレクトリ"gsl"がつくられます。  
-さらに、GCCを使用する場合には、リンク用の一時ファイルが出力されますが、これはバッチファイル実行時に消去されます。この一時ファイルはバッチファイル実行に必要なので、その前にユーザが消去すると、バッチファイルで正常にビルドすることができません。  
+さらに、GCCを使用する場合には、リンク用の一時ファイル（`tmp0000.txt`などの名称）が出力されますが、これはバッチファイル実行時に消去されます。この一時ファイルはバッチファイル実行に必要なので、その前にユーザが消去すると、バッチファイルで正常にビルドすることができません。  
   
 (iii)　コンパイラの種別  
 "-Cm"または"-Cg"で指定します。  
@@ -81,7 +89,7 @@ kgslbを実行する際、コンソールでオプションを指定します。
 "-Cg"を指定すると、GCC用のコマンドをバッチファイルに記述します。  
   
   
-## Running the batchfile "kgslb.bat" （バッチファイル"kgslb.bat"の実行）
+## バッチファイル"kgslb.bat"の実行
 
 kgslb.exeを実行すると、バッチファイル"kgslb.bat"がそのディレクトリに出力されます。  
 
@@ -97,6 +105,79 @@ kgslb.exeを実行すると、バッチファイル"kgslb.bat"がそのディレ
 I hope you all enjoy hacking!
   
   
+# Background （背景）
+
+いやいや、Unix/Linuxのスクリプトとか、autotoolsとか、GNU makeとか、ちょっとわからないんで。。。  
+  
+ネット上で得られる、GSL用のCMakeのMakeListを用いても、自分の環境では正常に利用できるライブラリができなかったので。。
+  
+単純に、ビルドするバッチファイルがあればよいのでは！？  
+  
+…っていうコンセプトで、つくったものです。  
+
+   
+# What is kgslb? 
+
+`kgslb` is a tool to ease building GNU Scientific Library (GSL).
+
+`kgslb` will simply provide you with a batchfile for DOS shell which indicates "in what order source files should be compiled and liked." It will parse the files named `Makefile.am` accompaning with GSL.
+
+Some existing and known methods to build GSL, for particularly DOS, include:
+
+- Executing GNU MAKE after `./configure` on Linux-compatible shell
+- Utilizing CMake; CMakeList.txt for building GSL is available on the Internet
+
+For more detail, please see the following sites:  
+  [GSL - GNU Scientific Library - GNU Project - Free Software Foundation](https://www.gnu.org/software/gsl/)  
+  [Building GSL on Windows Using Native Tools](https://www.gnu.org/software/gsl/extras/native_win_builds.html)
+
+Using `kgslb` is yet another way relative to these methods.
+
+Note that, in implementing GSL's functionatilies, you should comply with the license of GSL.  
+  
+
+# How to Use kgslb?
+  
+  
+## Building "kgslb.exe"
+
+Complie `kgslb.cpp` while including the files in `include` directory. Then link the object file into exetutable file `kgslb.exe.` You will need `Boost.Filesystem` in doing this.
+
+  
+## Preparation 
+
+Before running `kgslb.exe` you should prepare GSL's source files, etc., as follow.
+
+### GSL Source Files
+
+Download and get GSL's source files unpacked. Be sure that you have `Makefile.am` and `config.h.in` in GSL's top directory. 
+
+### Workspace Directory
+
+Prepare the workspace directory for `kgslb`. The same directory as the one containing `kgslb.exe` will be most convenient if you have no reason to avoid it.
+
+### Preraring `config.h`
+
+Copy `config.h.in` in GSL's top directory into the workspace directory. Then, rename it as `config.h`
+
+Then, modify `config.h` according to your envrionment.  
+Specific recommendations follow:
+- VC:  
+    VC has `isnan`, `isfinite`, and `isinf` functions (or macros), and so you should specify the existense of them in `config.h`.  
+- GCC:  
+    GCC has `finite`, in addition to `isnan`, `isfinite`, and `isinf` functions (or macros), and so you should specify the existense of them in `config.h`.  
+
+
+## Running kgslb.exe 
+
+COMING SOON!!
+
+
+## Running the batchfile "kgslb.bat" 
+
+COMING SOON!!
+
+
 # Misc
 Please comply with the terms appearing in LICENSE file. In addition, please read REQUEST file and understand the content.  
   
@@ -110,4 +191,4 @@ I am grateful to the creators of GNU Scientific Library for the benefit we could
 
 Mark Galassi, Jim Davies, James Theiler, Brian Gough, Reid Priedhorsky, Gerard Jungman, Michael Booth, Fabrice Rossi, Simone Piccardi, Carlo Perassi, Ho-Jin Dan, Szymon Jaroszewicz, Nicolas Darnis, Tuomo Keskitalo, Ivo Alxneit, Jason H. Stover, Patrick Alken, Rhys Ulerich, Pavel Holoborodko, Pedro Gonnet, and Free Software Foundation, Inc.
 
-I am also grateful to Daisuke Tominaga, who has made considerable efforts to translate the GSL reference manual into Japanese.
+I am also grateful to TOMINAGA Daisuke, who has made considerable efforts to translate the GSL reference manual into Japanese.
