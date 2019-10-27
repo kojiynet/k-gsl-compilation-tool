@@ -13,9 +13,6 @@
 	they are applicable only to ASCII characters.
 	
 	TODO:
-	using namespace stdをグローバルにはしない。
-	
-	TODO:
 	clArgsの名称をkargsにする？そしてファイルを独立させる？
 	ktimerも独立させる？
 	
@@ -48,7 +45,7 @@
 
 /* ********** Using Directives ********** */
 
-using namespace std;
+//using namespace std;
 
 
 /* ********** Type Declarations: enum, class, etc. ********** */
@@ -72,22 +69,22 @@ void setAlertOn( void);
 void setAlertExceptOn( void);
 void setAlertExceptOff( void);
 void alert( void);
-void alert( const string &);
-void alert( const string &, const string &);
-void alertExit( const string &);
-void alertExit( const string &, const string &);
-bool alertYesNo( const string &, const string &);
+void alert( const std::string &);
+void alert( const std::string &, const std::string &);
+void alertExit( const std::string &);
+void alertExit( const std::string &, const std::string &);
+bool alertYesNo( const std::string &, const std::string &);
 
-void intToString( string &, int, int);
-void doubleToString( string &, double, int = 6, int = 4);
-double stringToDouble( const string &);
+void intToString( std::string &, int, int);
+void doubleToString( std::string &, double, int = 6, int = 4);
+double stringToDouble( const std::string &);
 int roundToInt( double);
 
 bool virtuallyEqual( double, double, double = 1e-5);
 bool isNaN( const double &);
 
 compilerId getCompilerId( void);
-void getCompilerName( string &);
+void getCompilerName( std::string &);
 
 
 /* ********** Type Definitions: enum, class, etc. ********** */
@@ -107,7 +104,7 @@ class ktimer {
 		inline void stop( void);
 		inline long int getInterval( void);
 		
-		inline static void getActualTime( string &);
+		inline static void getActualTime( std::string &);
 		
 };
 
@@ -116,8 +113,8 @@ class clArgs {
 	
 	private:
 		
-		vector <char> keys; // assigned '\0' for no-key argument
-		vector <string> data;
+		std::vector <char> keys; // assigned '\0' for no-key argument
+		std::vector <std::string> data;
 		
 		static char nokey; // assigned '\0' to indicate "no-key" status
 	
@@ -132,8 +129,8 @@ class clArgs {
 		bool argWithoutKeyExists( void) const;
 		int countArgsCns( char) const;
 		int countArgsWithoutKey( void) const;
-		void getStringsCns( vector <string> &, char) const; // 「入れ物となる引数を先に書く」の原則から、追加された。
-		void getStringsWithoutKey( vector <string> &) const;
+		void getStringsCns( std::vector <std::string> &, char) const; // 「入れ物となる引数を先に書く」の原則から、追加された。
+		void getStringsWithoutKey( std::vector <std::string> &) const;
 		
 };
 
@@ -199,6 +196,8 @@ void setAlertExceptOff( void)
 void alert( void)
 {
 	
+	using namespace std;
+
 	if ( alertMode == true){
 		if ( alertExcept == false){
 			cerr << "Alert." << endl << endl;
@@ -212,9 +211,11 @@ void alert( void)
 /*
 	from（関数名など）からのものとして、アラートを表示する。
 */
-void alert( const string &from)
+void alert( const std::string &from)
 {
 	
+	using namespace std;
+
 	if ( alertMode == true){
 		if ( alertExcept == false){
 			cerr << "Alert from: " << from << endl << endl;
@@ -228,8 +229,10 @@ void alert( const string &from)
 /*
 	from（関数名など）からのメッセージmsgを伴うアラートを表示する。
 */
-void alert( const string &from, const string &msg)
+void alert( const std::string &from, const std::string &msg)
 {
+
+	using namespace std;
 	
 	if ( alertMode == true){
 		if ( alertExcept == false){
@@ -245,9 +248,11 @@ void alert( const string &from, const string &msg)
 /*
 	from（関数名など）からのアラートを表示し、EXIT_FAILUREを返しながらプログラムを終了する。
 */
-void alertExit( const string &from)
+void alertExit( const std::string &from)
 {
 	
+	using namespace std;
+
 	if ( alertMode == true){
 		if ( alertExcept == false){
 			cerr << "Alert from: " << from << endl
@@ -265,9 +270,11 @@ void alertExit( const string &from)
 	from（関数名など）からのメッセージmsgを伴うアラートを表示し、
 	EXIT_FAILUREを返しながらプログラムを終了する。
 */
-void alertExit( const string &from, const string &msg)
+void alertExit( const std::string &from, const std::string &msg)
 {
 	
+	using namespace std;
+
 	if ( alertMode == true){
 		if ( alertExcept == false){
 			cerr << "Alert from: " << from << endl
@@ -286,9 +293,11 @@ void alertExit( const string &from, const string &msg)
 	from（関数名など）からのメッセージmsgを伴うアラートを表示し、
 	Yes/Noの入力を求め、Yesならtrueを返す。
 */
-bool alertYesNo( const string &from, const string &msg)
+bool alertYesNo( const std::string &from, const std::string &msg)
 {
 	
+	using namespace std;
+
 	string inp;
 	char c;
 	
@@ -322,9 +331,11 @@ bool alertYesNo( const string &from, const string &msg)
 	k == -1のときには、fillingしない。
 	intToString( s, 1, 4)　→　s == "0001"
 */
-void intToString( string &ret, int v, int k)
+void intToString( std::string &ret, int v, int k)
 {
 	
+	using namespace std;
+
 	ostringstream oss;
 	
 	oss.str( "");
@@ -346,9 +357,11 @@ void intToString( string &ret, int v, int k)
 	指数形式ではなく固定小数点形式で表現する。
 	初期値としてk=6、el=4が与えられる。
 */
-void doubleToString( string &ret, double v, int k, int el)
+void doubleToString( std::string &ret, double v, int k, int el)
 {
 	
+	using namespace std;
+
 	int e10;
 	ostringstream oss;
 	
@@ -383,9 +396,11 @@ void doubleToString( string &ret, double v, int k, int el)
 	文字列sをdoubleに変換する。
 	数値で始まらない場合と、数値で始まるが無意味な文字列が続く場合は、quiet_NaNを返す。
 */
-double stringToDouble( const string &s)
+double stringToDouble( const std::string &s)
 {
 	
+	using namespace std;
+
 	stringstream ss;
 	double d;
 	string s2;
@@ -437,6 +452,8 @@ int roundToInt( double x)
 bool virtuallyEqual( double a, double b, double epsr)
 {
 	
+	using namespace std;
+
 	double absa, absb;
 	double diff;
 	double eps;
@@ -470,6 +487,8 @@ bool virtuallyEqual( double a, double b, double epsr)
 bool isNaN( const double &x)
 {
 	
+	using namespace std;
+
 	int dbyte;
 	char *ptr1, *ptr2;
 	double qnan;
@@ -553,7 +572,7 @@ compilerId getCompilerId( void)
 	コンパイラ名をretに入れる。
 	具体的には、{ "MSC", "BCC", "DMC", "GCC", "OTHERS"}のいずれかを返す。
 */
-void getCompilerName( string &ret)
+void getCompilerName( std::string &ret)
 {
 	
 	compilerId ci;
@@ -636,7 +655,7 @@ inline long int ktimer :: getInterval( void)
 /*
 	現在時刻を文字列でretに入れて返す。
 */
-inline void ktimer :: getActualTime( string &ret)
+inline void ktimer :: getActualTime( std::string &ret)
 {
 	
 	time_t tt;
@@ -805,7 +824,7 @@ int clArgs :: countArgsWithoutKey( void) const
 	keyが大文字であるか小文字であるかは区別しない。
 	Cnsは"Case Non-Sensitive"の意味
 */
-void clArgs :: getStringsCns( vector <string> &ret, char key) const
+void clArgs :: getStringsCns( std::vector <std::string> &ret, char key) const
 {
 	
 	char ukey, lkey;
@@ -827,7 +846,7 @@ void clArgs :: getStringsCns( vector <string> &ret, char key) const
 /*
 	keyを持たないオプションに付随する文字列の集合をretに入れる。
 */
-void clArgs :: getStringsWithoutKey( vector <string> &ret) const
+void clArgs :: getStringsWithoutKey( std::vector <std::string> &ret) const
 {
 	
 	int n;

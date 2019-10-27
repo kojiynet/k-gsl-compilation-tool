@@ -9,9 +9,6 @@
 	
 	Library for Exception Handling
 	
-	TODO:
-	using namespace stdをグローバルにはしない。
-	
 */
 
 
@@ -26,7 +23,7 @@
 
 /* ********** Using Directives ********** */
 
-using namespace std;
+//using namespace std;
 
 
 /* ********** Class Declarations ********** */
@@ -39,22 +36,22 @@ class MsgExcept;
 
 /* ********** Function Declarations ********** */
 
-void throwMsgExcept( const string &);
-void throwMsgExcept( const string &, const string &);
+void throwMsgExcept( const std::string &);
+void throwMsgExcept( const std::string &, const std::string &);
 
 
 /* ********** Class Definitions ********** */
 
 // exception class with message
-class MsgExcept : public exception {
+class MsgExcept : public std::exception {
 	
 private:
 	
-	string msg;
+	std::string msg;
 	
 public:
 	
-	MsgExcept( const string &);
+	MsgExcept( const std::string &);
 	virtual ~MsgExcept( void) throw();
 	
 	virtual const char * what( void) const throw();
@@ -71,10 +68,10 @@ public:
 /* ********** Function Definitions ********** */
 
 // throw exception with message indicating the place where error occurred
-void throwMsgExcept( const string &where0)
+void throwMsgExcept( const std::string &where0)
 {
 	
-	string str( "Error occurred in ");
+	std::string str( "Error occurred in ");
 	str += where0 + ".";
 	throw MsgExcept( str);
 	
@@ -82,10 +79,10 @@ void throwMsgExcept( const string &where0)
 
 // throw exception with message "where0" indicating the place where error occurred,
 // and message "what0" indicating what occurred
-void throwMsgExcept( const string &where0, const string &what0)
+void throwMsgExcept( const std::string &where0, const std::string &what0)
 {
 	
-	string str( "Error occurred in ");
+	std::string str( "Error occurred in ");
 	str += where0 + "; " + what0;
 	throw MsgExcept( str);
 	
@@ -94,7 +91,7 @@ void throwMsgExcept( const string &where0, const string &what0)
 
 /* ********** Definitions of Member Functions ********** */
 
-MsgExcept :: MsgExcept( const string &s0)
+MsgExcept :: MsgExcept( const std::string &s0)
 : msg( s0)
 {
 }
