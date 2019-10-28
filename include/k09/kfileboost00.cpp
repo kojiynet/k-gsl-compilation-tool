@@ -9,9 +9,6 @@
 	File System Utilities
 	Using Boost.Filesystem
 	
-	TODO:
-	using namespace stdをグローバルにはしない。
-	
 */
 
 
@@ -27,8 +24,8 @@
 
 /* ********** Using Directives ********** */
 
-using namespace std;
-using namespace boost :: filesystem;
+//using namespace std;
+//using namespace boost :: filesystem;
 
 
 /* ********** Type Declarations: enum, class, etc. ********** */
@@ -36,12 +33,12 @@ using namespace boost :: filesystem;
 
 /* ********** Function Declarations ********** */
 
-bool fileExists( const string &);
-bool directoryOfFileExists( const string &);
-void getCurrentDir( string &);
-void getDirectoryOfFile( string &, const string &);
-bool isFileNameWithFullPath( const string &);
-void getTempFileName( string &, const string &, const string &, int);
+bool fileExists( const std::string &);
+bool directoryOfFileExists( const std::string &);
+void getCurrentDir( std::string &);
+void getDirectoryOfFile( std::string &, const std::string &);
+bool isFileNameWithFullPath( const std::string &);
+void getTempFileName( std::string &, const std::string &, const std::string &, int);
 
 
 /* ********** Type Definitions: enum, class, etc. ********** */
@@ -58,9 +55,11 @@ void getTempFileName( string &, const string &, const string &, int);
 /*
 	Returns true if file named fn exists
 */
-bool fileExists( const string &fn)
+bool fileExists( const std::string &fn)
 {
 	
+	using namespace boost :: filesystem;
+
 	path p( fn);
 	return exists( p);
 	
@@ -69,9 +68,11 @@ bool fileExists( const string &fn)
 /*
 	Returns true if the directory of the file named fn exists
 */
-bool directoryOfFileExists( const string &fn)
+bool directoryOfFileExists( const std::string &fn)
 {
 	
+	using namespace boost :: filesystem;
+
 	path p( fn);
 	path dir = p.parent_path();
 	return exists( dir);
@@ -82,9 +83,11 @@ bool directoryOfFileExists( const string &fn)
 	Returns the current path into ret.
 	e.g. ret = "c:\\cpp"
 */
-void getCurrentDir( string &ret)
+void getCurrentDir( std::string &ret)
 {
 	
+	using namespace boost :: filesystem;
+
 	path p;
 	p = current_path();
 	ret.assign( p.string());
@@ -98,9 +101,11 @@ void getCurrentDir( string &ret)
 	then ret will be
 	 "C:\\cpp\\utilcraft"
 */
-void getDirectoryOfFile( string &ret, const string &fn)
+void getDirectoryOfFile( std::string &ret, const std::string &fn)
 {
 	
+	using namespace boost :: filesystem;
+
 	path p( fn);
 	
 	if ( exists( p) == false){
@@ -116,9 +121,11 @@ void getDirectoryOfFile( string &ret, const string &fn)
 /*
 	Returns true if the file named "fn" is a file name and also contains full-path..
 */
-bool isFileNameWithFullPath( const string &fn)
+bool isFileNameWithFullPath( const std::string &fn)
 {
 	
+	using namespace boost :: filesystem;
+
 	path p( fn);
 	
 	if ( p.is_absolute() == true && p.has_filename() == true){
@@ -138,11 +145,13 @@ bool isFileNameWithFullPath( const string &fn)
 	              k   = 4
 	返り値の例：　"c:\\cpp\\test\\tempf0019.txt"
 */
-void getTempFileName( string &ret, const string &fn, const string &ext, int k)
+void getTempFileName( std::string &ret, const std::string &fn, const std::string &ext, int k)
 {
 	
+	using namespace boost :: filesystem;
+	
 	int count;
-	string fn2, full;
+	std::string fn2, full;
 	
 	if ( k <= 0){
 		alert( "getTempFileName()");
