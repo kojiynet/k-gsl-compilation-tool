@@ -8,10 +8,7 @@
 	Copyright (C) 2016-2019 Koji Yamamoto
 	In using this, please read the document which states terms of use.
 	
-	ファイル読み込みモジュール
-	
-	TODO:
-	using namespace stdをグローバルにはしない。
+	ファイル読み込み
 	
 */
 
@@ -31,7 +28,7 @@
 
 /* ********** Using Directives ********** */
 
-using namespace std;
+//using namespace std;
 
 
 /* ********** Class Declarations ********** */
@@ -51,21 +48,21 @@ class kinputfile {
 	
 private:
 	
-	ifstream ifs;
-	string fn;
+	std::ifstream ifs;
+	std::string fn;
 	
 public:
 	
 	kinputfile( void) : ifs(), fn(){}
-	kinputfile( const string &);
+	kinputfile( const std::string &);
 	~kinputfile( void);
 	
-	void setFileName( const string &);
+	void setFileName( const std::string &);
 	bool open( void);
 	void close( void);
-	bool readLine( string &);
-	void readAllLines( vector <string> &);
-	void getSeparatedStrings( vector < vector <string> > &, const string &);
+	bool readLine( std::string &);
+	void readAllLines( std::vector <std::string> &);
+	void getSeparatedStrings( std::vector < std::vector <std::string> > &, const std::string &);
 	
 //		char ***getSeparatedStrings( const char *sep, int *nlinep, int **ncolpp);
 		
@@ -83,7 +80,7 @@ public:
 
 /* ********** Definitions of Member Functions ********** */
 
-kinputfile :: kinputfile( const string &n)
+kinputfile :: kinputfile( const std::string &n)
 {
 	
 	setFileName( n);
@@ -98,7 +95,7 @@ kinputfile :: ~kinputfile( void)
 	
 }
 
-void kinputfile :: setFileName( const string &n)
+void kinputfile :: setFileName( const std::string &n)
 {
 	
 	fn.assign( n);
@@ -113,7 +110,7 @@ bool kinputfile :: open( void)
 	ifs.clear();
 	
 	// バイナリモードで開かないと、UNIX形式のファイルをうまく扱えない。
-	ifs.open( fn.c_str(), ios_base :: in | ios_base :: binary);
+	ifs.open( fn.c_str(), std::ios_base :: in | std::ios_base :: binary);
 	
 	if ( ifs.fail() == true){
 		alert( "kinputfile :: open()");
@@ -135,11 +132,11 @@ void kinputfile :: close( void)
 // ファイルから1行読み込んで、渡された文字列オブジェクトretに入れる。
 // EOFに達したらfalseを返す。
 // 3つの改行形式（\r\n、\rのみ、\nのみ）に対応している。
-bool kinputfile :: readLine( string &ret)
+bool kinputfile :: readLine( std::string &ret)
 {
 	
 	char c;
-	stringstream ss;
+	std::stringstream ss;
 	bool eof;
 	
 	if ( ifs.good() == false){
@@ -172,7 +169,7 @@ bool kinputfile :: readLine( string &ret)
 			
 			// \rの次の文字が\nでないなら、\rのみで改行が表現されている
 			if ( c != '\n'){
-				ifs.seekg( -1, ios_base :: cur);
+				ifs.seekg( -1, std::ios_base :: cur);
 			}
 			
 			break;
@@ -197,10 +194,10 @@ bool kinputfile :: readLine( string &ret)
 }
 
 // ファイルを全部読み込んで、各行をvector <string> retに入れて返す。
-void kinputfile :: readAllLines( vector <string> &ret)
+void kinputfile :: readAllLines( std::vector <std::string> &ret)
 {
 	
-	string temp;
+	std::string temp;
 	bool b;
 	
 	ret.clear();
@@ -221,11 +218,13 @@ void kinputfile :: readAllLines( vector <string> &ret)
 // 行によって列数がまちまちになっている可能性がある
 void
 kinputfile :: 
-getSeparatedStrings( vector < vector <string> > &ret, const string &sep)
+getSeparatedStrings(
+	std::vector < std::vector <std::string> > &ret, const std::string &sep
+)
 {
 	
-	vector <string> lines;
-	vector <string> tempwords;
+	std::vector <std::string> lines;
+	std::vector <std::string> tempwords;
 	
 	ret.clear();
 	

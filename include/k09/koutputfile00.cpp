@@ -7,9 +7,6 @@
 	
 	TODO: datasetを書き出す関数を書いて、旧バージョンを消す。
 	
-	TODO:
-	using namespace stdをグローバルにはしない。
-	
 */
 
 
@@ -22,7 +19,7 @@
 #include <k09/kutil00.cpp>
 #include <k09/kfileboost00.cpp>
 
-using namespace std;
+//using namespace std;
 
 
 /* ********** クラス宣言 ********** */
@@ -39,20 +36,20 @@ class koutputfile {
 	
 	private:
 		
-		std :: ofstream ofs;
-		string fn;
+		std::ofstream ofs;
+		std::string fn;
 		
 	public:
 		
 		koutputfile( void);
-		koutputfile( const string &);
+		koutputfile( const std::string &);
 		~koutputfile( void);
 		
-		void setFileName( const string &);
+		void setFileName( const std::string &);
 		bool open( bool = true, bool = false, bool = true);
 		void close( void);
-		bool writeLine( const string &);
-		bool writeLines( const vector <string> &);
+		bool writeLine( const std::string &);
+		bool writeLines( const std::vector <std::string> &);
 		
 /*
 		void writeDataset( kdataset &kd, const char *sep);
@@ -76,7 +73,7 @@ koutputfile :: koutputfile( void) : ofs(), fn()
 {}
 
 // sをファイル名とする。
-koutputfile :: koutputfile( const string &s) : ofs()
+koutputfile :: koutputfile( const std::string &s) : ofs()
 {
 	
 	setFileName( s);
@@ -90,7 +87,7 @@ koutputfile :: ~koutputfile( void)
 	
 }
 
-void koutputfile :: setFileName( const string &s)
+void koutputfile :: setFileName( const std::string &s)
 {
 	
 	fn.assign( s);
@@ -108,7 +105,7 @@ void koutputfile :: setFileName( const string &s)
 bool koutputfile :: open( bool append, bool overwrite, bool ask)
 {
 	
-	ios_base :: openmode om;
+	std::ios_base :: openmode om;
 	
 	// このオブジェクトで前に別のファイルをopenしたことがある場合に備えて、clear()する。
 	ofs.clear();
@@ -118,11 +115,11 @@ bool koutputfile :: open( bool append, bool overwrite, bool ask)
 		return false;
 	}
 	
-	om = ios_base :: out;
+	om = std::ios_base :: out;
 	
 	if ( fileExists( fn.c_str()) == true){
 		if ( append == true){
-			om = om | ( ios_base :: app);
+			om = om | ( std::ios_base :: app);
 		} else {
 			if ( overwrite == true){
 				// 上書きする。
@@ -165,7 +162,7 @@ void koutputfile :: close( void)
 
 // sを改行付きで書き出す。
 // 正常に書き込まれた場合にtrueを返す。
-bool koutputfile :: writeLine( const string &s)
+bool koutputfile :: writeLine( const std::string &s)
 {
 	
 	if ( ofs.is_open() == false || ofs.good() == false){
@@ -173,7 +170,7 @@ bool koutputfile :: writeLine( const string &s)
 		return false;
 	}
 	
-	ofs << s << endl;
+	ofs << s << std::endl;
 	
 	if ( ofs.is_open() == false || ofs.good() == false){
 		alert( "koutputfile :: writeLine()", "The program tried to write, but the file status got not good.");
@@ -186,7 +183,7 @@ bool koutputfile :: writeLine( const string &s)
 
 // svに含まれるstringを順番に改行付きで書き出す。
 // 正常に書き込まれた場合にtrueを返す。
-bool koutputfile :: writeLines( const vector <string> &sv)
+bool koutputfile :: writeLines( const std::vector <std::string> &sv)
 {
 	
 	int n;
@@ -198,7 +195,7 @@ bool koutputfile :: writeLines( const vector <string> &sv)
 	
 	n = sv.size();
 	for ( int i = 0; i < n; i++){
-		ofs << sv[ i] << endl;
+		ofs << sv[ i] << std::endl;
 	}
 	
 	if ( ofs.is_open() == false || ofs.good() == false){
@@ -276,4 +273,4 @@ void koutputfile :: writeStream( void)
 
 */
 
-#endif
+#endif /* koutputfile_cpp_include_guard */

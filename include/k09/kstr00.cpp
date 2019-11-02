@@ -12,9 +12,6 @@
 	When functions dealing with characters,
 	they are applicable only to ASCII characters.
 	
-	TODO:
-	using namespace stdをグローバルにはしない。
-	
 */
 
 
@@ -32,7 +29,7 @@
 
 /* ********** Using Directives ********** */
 
-using namespace std;
+//using namespace std;
 
 
 /* ********** Type Declarations: enum, class, etc. ********** */
@@ -41,11 +38,11 @@ class PairedPos;
 
 /* ********** Function Declarations ********** */
 
-void tokenize( vector <string> &, const string &, const string &);
-void extractWords( vector <string> &, const string &, const string &, const string &);
-void separateQuote( vector <string> &, vector <bool> &, const string &, const string &, const string &);
-void omitCommentBetween( vector <string> &, const vector <string> &, string, string);
-void omitCommentToEndl( vector <string> &, const vector <string> &, string);
+void tokenize( std::vector <std::string> &, const std::string &, const std::string &);
+void extractWords( std::vector <std::string> &, const std::string &, const std::string &, const std::string &);
+void separateQuote( std::vector <std::string> &, std::vector <bool> &, const std::string &, const std::string &, const std::string &);
+void omitCommentBetween( std::vector <std::string> &, const std::vector <std::string> &, std::string, std::string);
+void omitCommentToEndl( std::vector <std::string> &, const std::vector <std::string> &, std::string);
 
 /* ********** Type Definitions: enum, class, etc. ********** */
 
@@ -78,7 +75,7 @@ public:
 	文字列baseを、区切り文字集合sepによってトークンに分けて、
 	文字列ベクターのretに入れる。
 */
-void tokenize( vector <string> &ret, const string &base, const string &sep)
+void tokenize( std::vector <std::string> &ret, const std::string &base, const std::string &sep)
 {
 	
 	int p, startp, endp;
@@ -89,14 +86,14 @@ void tokenize( vector <string> &ret, const string &base, const string &sep)
 	do {
 		
 		startp = base.find_first_not_of( sep, p);
-		if ( startp == string :: npos)
+		if ( startp == std::string :: npos)
 			break;
 		
 		endp = base.find_first_of( sep, startp);
-		if ( endp == string :: npos)
+		if ( endp == std::string :: npos)
 			endp = base.length();
 		
-		ret.push_back( string( base.substr( startp, ( endp - startp))));
+		ret.push_back( std::string( base.substr( startp, ( endp - startp))));
 		
 		p = endp + 1;
 		
@@ -113,8 +110,8 @@ void tokenize( vector <string> &ret, const string &base, const string &sep)
 	　　{}で囲まれた部分を取り出す、とか。
 */
 void extractWords(
-	vector <string> &ret, const string &s, const string &left,
-	const string &right
+	std::vector <std::string> &ret, const std::string &s, const std::string &left,
+	const std::string &right
 )
 {
 	
@@ -129,15 +126,15 @@ void extractWords(
 			break;
 		
 		startp = s.find_first_of( left, p);
-		if ( startp == string :: npos)
+		if ( startp == std::string :: npos)
 			break;
 		endp = s.find_first_of( right, startp + 1);
-		if ( endp == string :: npos){
+		if ( endp == std::string :: npos){
 			alert( "extractWords()");
 			break;
 		}
 		
-		ret.push_back( string( s.substr( startp + 1, ( endp - startp - 1))));
+		ret.push_back( std::string( s.substr( startp + 1, ( endp - startp - 1))));
 		
 		p = endp + 1;
 		
@@ -156,8 +153,8 @@ void extractWords(
 	Quatations symbols, i.e. "left" and "right", are omitted from "ret".
 */
 void separateQuote(
-	vector <string> &ret, vector <bool> &isQuote, const string &str,
-	const string &left, const string &right)
+	std::vector <std::string> &ret, std::vector <bool> &isQuote, const std::string &str,
+	const std::string &left, const std::string &right)
 {
 	
 	int p, startp, endp;
@@ -172,16 +169,16 @@ void separateQuote(
 			break;
 		
 		startp = str.find_first_of( left, p);
-		if ( startp == string :: npos){
-			ret.push_back( str.substr( p, string :: npos));
+		if ( startp == std::string :: npos){
+			ret.push_back( str.substr( p, std::string :: npos));
 			isQuote.push_back( false);
 			break;
 		}
 		
 		endp = str.find_first_of( right, startp + 1);
-		if ( endp == string :: npos){
+		if ( endp == std::string :: npos){
 			// There is an incomplete quatation.
-			ret.push_back( str.substr( p, string :: npos));
+			ret.push_back( str.substr( p, std::string :: npos));
 			isQuote.push_back( false);
 			break;
 		}
@@ -208,26 +205,26 @@ void separateQuote(
 */
 // 例：omitCommentBetween( offcomment, infile, "/*", "*/");
 void omitCommentBetween(
-	vector <string> &ret, const vector <string> &origin,
-	string left, string right
+	std::vector <std::string> &ret, const std::vector <std::string> &origin,
+	std::string left, std::string right
 )
 {
 	
 	// LinePosクラスをつくり、lineとposを同時に管理して、
 	// 関数で位置関係を比較できるようにする？
 	
-	vector <int> startline;
-	vector <int> startpos;
-	vector <int> endline;
-	vector <int> endpos;
-	vector <PairedPos> pairs;
-	vector <int> unpairedsl;
-	vector <int> unpairedsp;
+	std::vector <int> startline;
+	std::vector <int> startpos;
+	std::vector <int> endline;
+	std::vector <int> endpos;
+	std::vector <PairedPos> pairs;
+	std::vector <int> unpairedsl;
+	std::vector <int> unpairedsp;
 	int n;
 	int p;
 	int sidx, eidx;
-	vector <string> mask;
-	stringstream ss;
+	std::vector <std::string> mask;
+	std::stringstream ss;
 	
 	if ( &ret == &origin){
 		// two vectors have in fact the same address
@@ -244,7 +241,7 @@ void omitCommentBetween(
 		while ( p < origin[ i].size()){
 			
 			p = origin[ i].find( left, p);
-			if ( p == string :: npos){
+			if ( p == std::string :: npos){
 				break;
 			} else {
 				startline.push_back( i);
@@ -263,7 +260,7 @@ void omitCommentBetween(
 		while ( p < origin[ i].size()){
 			
 			p = origin[ i].find( right, p);
-			if ( p == string :: npos){
+			if ( p == std::string :: npos){
 				break;
 			} else {
 				endline.push_back( i);
@@ -328,7 +325,7 @@ void omitCommentBetween(
 	mask.clear();
 	mask.resize( n);
 	for ( int i = 0; i < n; i++){
-		mask[ i] = string( origin[ i].size(), 'T');
+		mask[ i] = std::string( origin[ i].size(), 'T');
 	}
 	
 	for ( int pairid = 0; pairid < pairs.size(); pairid++){
@@ -382,17 +379,17 @@ void omitCommentBetween(
 */
 // 例：omitCommentToEndl( offcomment, infile, "//");
 void omitCommentToEndl(
-	vector <string> &ret, const vector <string> &origin,
-	string left
+	std::vector <std::string> &ret, const std::vector <std::string> &origin,
+	std::string left
 )
 {
 	
-	vector <int> startline;
-	vector <int> startpos;
+	std::vector <int> startline;
+	std::vector <int> startpos;
 	int n;
 	int p;
-	vector <string> mask;
-	stringstream ss;
+	std::vector <std::string> mask;
+	std::stringstream ss;
 	
 	if ( &ret == &origin){
 		// two vectors have in fact the same address
@@ -406,7 +403,7 @@ void omitCommentToEndl(
 	for ( int i = 0; i < n; i++){
 		
 		p = origin[ i].find( left);
-		if ( p != string :: npos){
+		if ( p != std::string :: npos){
 			startline.push_back( i);
 			startpos.push_back( p);
 		}
@@ -416,7 +413,7 @@ void omitCommentToEndl(
 	// specifying part to copy
 	mask.resize( n);
 	for ( int i = 0; i < n; i++){
-		mask[ i] = string( origin[ i].size(), 'T');
+		mask[ i] = std::string( origin[ i].size(), 'T');
 	}
 	
 	for ( int id = 0; id < startline.size(); id++){
