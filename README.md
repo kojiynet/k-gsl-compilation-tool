@@ -37,7 +37,7 @@ Note that, in implementing GSL's functionatilies, you should comply with the lic
   
 ## Building "kgslb.exe"
 
-Complie `kgslb.cpp` while including the files in `include` directory. Then link the object file into exetutable file `kgslb.exe.` You will need `Boost.Filesystem` in doing this.
+Complie `kgslb.cpp` while including the files in `include` directory. Then link the object file into exetutable file `kgslb.exe`. You will need `Boost.Filesystem` in doing this.
 
   
 ## Preparation 
