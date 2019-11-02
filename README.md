@@ -146,9 +146,6 @@ Mark Galassi, Jim Davies, James Theiler, Brian Gough, Reid Priedhorsky, Gerard J
 I am also grateful to TOMINAGA Daisuke, who has made considerable efforts to translate the GSL reference manual into Japanese.
 
 
-# ディレクトリ名など、ASCII文字しか対応していない。
-
-
 # kgslbとは？ (What is kgslb?)
 
 kgslbは、GNU Scientific Library（GSL）をビルドする際に、補助するツールです。
