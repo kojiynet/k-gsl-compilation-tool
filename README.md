@@ -78,7 +78,7 @@ The explanations are below.
 
 ### Option `-S`: Source file directory
 
-You should specify the source file directory, which is usually the one named `gsl-2.6` for GSL ver. 2.6.  
+You should specify the source file directory, which is usually named `gsl-2.6` for GSL ver. 2.6.  
 `kgslb.exe` will use the information written in `Makefile.am` files in the source file directory and the subdirectories.  
 
 You should speficy the source file directory like below:  
